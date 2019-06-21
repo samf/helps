@@ -1,4 +1,5 @@
 #!/bin/bash
+
 {
 #stop the satalite to prepair for backup
 /usr/sbin/rhn-satellite stop
