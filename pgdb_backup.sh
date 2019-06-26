@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-#call using comand "su - OWNER - c /tmp/grant/pgdb_backup.sh DATABASE_NAME"
+#call using comand "su - OWNER -c '/tmp/grant/pgdb_backup.sh DATABASE_NAME'"
 
 #t = title, d = date, 1 = database name argument
 
