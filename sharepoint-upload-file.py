@@ -19,7 +19,7 @@ import shutil
 import os
 from requests_toolbelt import MultipartEncoder
 
-#edit these to change the upload destination
+# edit these to change the upload destination
 siteURL = "aerisllc.sharepoint.com"
 spfoldername = "Shared%20Documents/APITest/"
 
@@ -28,8 +28,25 @@ localFileSize = os.stat(filename).st_size
 
 s = sharepy.connect(siteURL)
 
-headers = {"accept": "application/json;odata=verbose", "content-type": "multipart/form-data", "content-length": str(localFileSize), "connection": "keep-alive", "X-RequestDigest": s._redigest(), "X-FORMS_BASED_AUTH_ACCEPTED": "f", "If-Match": "*", "Authorization": "Bearer " + s._redigest()}
+headers = {
+    "accept": "application/json;odata=verbose",
+    "content-type": "multipart/form-data",
+    "content-length": str(localFileSize),
+    "connection": "keep-alive",
+    "X-RequestDigest": s._redigest(),
+    "X-FORMS_BASED_AUTH_ACCEPTED": "f",
+    "If-Match": "*",
+    "Authorization": "Bearer " + s._redigest(),
+}
 
-m = MultipartEncoder(fields={(filename, open(filename, 'rb'))})
-p = s.post("http://aerisllc.sharepoint.com/_api/web/getfolderbyserverrelativeurl('"+spfoldername+"')/Files/add(url='"+ filename +"',overwrite=true)", data = m, headers = headers)
+m = MultipartEncoder(fields={(filename, open(filename, "rb"))})
+p = s.post(
+    "http://aerisllc.sharepoint.com/_api/web/getfolderbyserverrelativeurl('"
+    + spfoldername
+    + "')/Files/add(url='"
+    + filename
+    + "',overwrite=true)",
+    data=m,
+    headers=headers,
+)
 print(p)
