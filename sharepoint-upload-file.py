@@ -1,6 +1,4 @@
 #
-#    A script to upload files to sharepoint!
-#
 #    Run by navigating to directory containing upload file, then execute:
 #    python3 /PATH/TO/sharepoint-upload-file.py FILENAME.ext
 #
@@ -39,14 +37,15 @@ headers = {
     "Authorization": "Bearer " + s._redigest(),
 }
 
-m = MultipartEncoder(fields={(filename, open(filename, "rb"))})
-p = s.post(
-    "http://aerisllc.sharepoint.com/_api/web/getfolderbyserverrelativeurl('"
-    + spfoldername
-    + "')/Files/add(url='"
-    + filename
-    + "',overwrite=true)",
-    data=m,
-    headers=headers,
-)
+with f as open(filename, "rb"):
+    m = MultipartEncoder(fields={(filename, f)})
+    p = s.post(
+        "http://aerisllc.sharepoint.com/_api/web/getfolderbyserverrelativeurl('"
+        + spfoldername
+        + "')/Files/add(url='"
+        + filename
+        + "',overwrite=true)",
+        data=m,
+        headers=headers,
+    )
 print(p)
